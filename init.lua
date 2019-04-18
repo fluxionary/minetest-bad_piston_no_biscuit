@@ -1,109 +1,54 @@
-minetest.log('[biscuit] bad piston no biscuit')
+minetest.log('action', '[bad_piston_no_biscuit] initializing')
 
--- terumetal machines
-mesecon.register_mvps_stopper('terumet:mach_asmelt')
-mesecon.register_mvps_stopper('terumet:mach_asmelt_lit')
-mesecon.register_mvps_stopper('terumet:mach_htfurn')
-mesecon.register_mvps_stopper('terumet:mach_htfurn_lit')
-mesecon.register_mvps_stopper('terumet:mach_vulcan')
+local patterns = {
+    '3d_armor_stand:.*',
+    'areasprotector:.*',
+    'chesttools:shared_chest',
+    'currency:.*',
+    'doors:.*prison.*',
+    'doors:.*steel.*',
+    'gravelsieve:.*',
+    'homedecor:.*_locked',
+    'inbox:.*',
+    'mailbox:.*',
+    'maptools:.*',
+    'mesecons_commandblock:.*',
+    'nether:bedrock',
+    'smartline:.*',
+    'smartrenting:.*',
+    'smartshop:.*',
+    'technic:.*_locked_chest',
+    'techpack_warehouse:.*',
+    'terumet:mach_.*',
+    'travelnet:.*',
+    'tubelib.*:.*',
+    'xdecor:mailbox',
+}
 
-mesecon.register_mvps_stopper('terumet:mach_hray')
-mesecon.register_mvps_stopper('terumet:mach_thermdist')
-mesecon.register_mvps_stopper('terumet:mach_thermobox')
+function pairsByKeys(t, f)
+    local a = {}
+    for n in pairs(t) do table.insert(a, n) end
+    table.sort(a, f)
+    local i = 0 -- iterator variable
+    return function() -- iterator function
+        i = i + 1
 
-mesecon.register_mvps_stopper('terumet:mach_htr_entropy')
-mesecon.register_mvps_stopper('terumet:mach_htr_furnace')
-mesecon.register_mvps_stopper('terumet:mach_htr_furnace_lit')
-mesecon.register_mvps_stopper('terumet:mach_htr_solar')
+        if a[i] == nil then
+            return nil
 
--- future-proofing
-mesecon.register_mvps_stopper('terumet:mach_repm')
-mesecon.register_mvps_stopper('terumet:mach_hl_input')
-mesecon.register_mvps_stopper('terumet:mach_lavam')
-mesecon.register_mvps_stopper('terumet:mach_lavam_lit')
-mesecon.register_mvps_stopper('terumet:mach_meseg')
-mesecon.register_mvps_stopper('terumet:mach_crusher')
-mesecon.register_mvps_stopper('terumet:mach_crusher_lit')
+        else
+            return a[i], t[a[i]]
+        end
+    end
+end
 
--- technic chests
-mesecon.register_mvps_stopper('chesttools:shared_chest')
-mesecon.register_mvps_stopper('technic:copper_locked_chest')
-mesecon.register_mvps_stopper('technic:gold_locked_chest')
-mesecon.register_mvps_stopper('technic:iron_locked_chest')
-mesecon.register_mvps_stopper('technic:mithril_locked_chest')
-mesecon.register_mvps_stopper('technic:silver_locked_chest')
-
--- travelnet
-mesecon.register_mvps_stopper('travelnet:elevator')
-mesecon.register_mvps_stopper('travelnet:travelnet')
-
--- tubelib
-mesecon.register_mvps_stopper('tubelib:blackhole')
-mesecon.register_mvps_stopper('tubelib:button')
-mesecon.register_mvps_stopper('tubelib:button_active')
-mesecon.register_mvps_stopper('tubelib:distributor')
-mesecon.register_mvps_stopper('tubelib:distributor_active')
-mesecon.register_mvps_stopper('tubelib:lamp')
-mesecon.register_mvps_stopper('tubelib:lamp_on')
-mesecon.register_mvps_stopper('tubelib:pusher')
-mesecon.register_mvps_stopper('tubelib:pusher_active')
-mesecon.register_mvps_stopper('tubelib_addons1:autocrafter')
-mesecon.register_mvps_stopper('tubelib_addons1:autocrafter_active')
-mesecon.register_mvps_stopper('tubelib_addons1:chest')
-mesecon.register_mvps_stopper('tubelib_addons1:detector')
-mesecon.register_mvps_stopper('tubelib_addons1:detector_active')
-mesecon.register_mvps_stopper('tubelib_addons1:fermenter')
-mesecon.register_mvps_stopper('tubelib_addons1:fermenter_top')
-mesecon.register_mvps_stopper('tubelib_addons1:funnel')
-mesecon.register_mvps_stopper('tubelib_addons1:grinder')
-mesecon.register_mvps_stopper('tubelib_addons1:grinder_active')
-mesecon.register_mvps_stopper('tubelib_addons1:harvester_base')
-mesecon.register_mvps_stopper('tubelib_addons1:harvester_base_active')
-mesecon.register_mvps_stopper('tubelib_addons1:liquidsampler')
-mesecon.register_mvps_stopper('tubelib_addons1:liquidsampler_active')
-mesecon.register_mvps_stopper('tubelib_addons1:pusher_fast')
-mesecon.register_mvps_stopper('tubelib_addons1:pusher_fast_active')
-mesecon.register_mvps_stopper('tubelib_addons1:quarry')
-mesecon.register_mvps_stopper('tubelib_addons1:quarry_active')
-mesecon.register_mvps_stopper('tubelib_addons1:reformer')
-mesecon.register_mvps_stopper('tubelib_addons1:reformer_top')
-mesecon.register_mvps_stopper('tubelib_addons2:accesscontrol')
-mesecon.register_mvps_stopper('tubelib_addons2:ceilinglamp')
-mesecon.register_mvps_stopper('tubelib_addons2:ceilinglamp_on')
-mesecon.register_mvps_stopper('tubelib_addons2:mesecons_converter')
-mesecon.register_mvps_stopper('tubelib_addons2:repeater')
-mesecon.register_mvps_stopper('tubelib_addons2:sequencer')
-mesecon.register_mvps_stopper('tubelib_addons2:timer')
-mesecon.register_mvps_stopper('tubelib_addons3:chest')
-mesecon.register_mvps_stopper('tubelib_addons3:distributor')
-mesecon.register_mvps_stopper('tubelib_addons3:distributor_active')
-mesecon.register_mvps_stopper('tubelib_addons3:pusher')
-mesecon.register_mvps_stopper('tubelib_addons3:pusher_active')
-mesecon.register_mvps_stopper('tubelib_addons3:pushing_chest')
-mesecon.register_mvps_stopper('tubelib_addons3:teleporter')
-
--- locked stuff
-mesecon.register_mvps_stopper('3d_armor_stand:locked_armor_stand')
-mesecon.register_mvps_stopper('homedecor:desk_locked')
-mesecon.register_mvps_stopper('homedecor:filing_cabinet_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_granite_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_half_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_marble_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_steel_locked')
-mesecon.register_mvps_stopper('homedecor:kitchen_cabinet_with_sink_locked')
-mesecon.register_mvps_stopper('homedecor:microwave_oven_locked')
-mesecon.register_mvps_stopper('homedecor:nightstand_mahogany_one_drawer_locked')
-mesecon.register_mvps_stopper('homedecor:nightstand_mahogany_two_drawers_locked')
-mesecon.register_mvps_stopper('homedecor:nightstand_oak_one_drawer_locked')
-mesecon.register_mvps_stopper('homedecor:nightstand_oak_two_drawers_locked')
-mesecon.register_mvps_stopper('homedecor:oven_locked')
-mesecon.register_mvps_stopper('homedecor:oven_steel_locked')
-mesecon.register_mvps_stopper('homedecor:refrigerator_steel_locked')
-mesecon.register_mvps_stopper('homedecor:refrigerator_white_locked')
-
--- protection stuff
-mesecon.register_mvps_stopper('areasprotector:protector')
-mesecon.register_mvps_stopper('doors:door_steel_protected')
-mesecon.register_mvps_stopper('doors:door_steel_protected_a')
-mesecon.register_mvps_stopper('doors:door_steel_protected_b')
+for node_name, _ in pairsByKeys(minetest.registered_nodes) do
+    for _, pattern in pairs(patterns) do
+        local fullpattern = '^' .. pattern .. '$'
+        if string.find(node_name, fullpattern) then
+            minetest.log('action', '[bad_piston_no_biscuit] registering ' .. node_name)
+            mesecon.register_mvps_stopper(node_name)
+            break
+        end
+    end
+end
