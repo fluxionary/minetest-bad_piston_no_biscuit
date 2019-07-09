@@ -1,4 +1,4 @@
-minetest.log('action', '[bad_piston_no_biscuit] initializing')
+minetest.log('info', '[bad_piston_no_biscuit] initializing')
 
 local patterns = {
     '3d_armor_stand:.*',
@@ -46,7 +46,7 @@ for node_name, _ in pairsByKeys(minetest.registered_nodes) do
     for _, pattern in pairs(patterns) do
         local fullpattern = '^' .. pattern .. '$'
         if string.find(node_name, fullpattern) then
-            minetest.log('action', '[bad_piston_no_biscuit] registering ' .. node_name)
+            minetest.log('info', '[bad_piston_no_biscuit] registering ' .. node_name)
             mesecon.register_mvps_stopper(node_name)
             break
         end
